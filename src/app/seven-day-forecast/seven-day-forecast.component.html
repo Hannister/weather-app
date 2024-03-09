@@ -1,1 +1,8 @@
-<p>{{ weatherForecast | json }}</p>
+<section class="weather-forecast">
+  <!-- <p>{{ weatherForecast | json }}</p> -->
+  @for (day of weatherForecast; track day) {
+  <day-card-forecast [day]="day"></day-card-forecast>
+  } @empty {
+  <li>something gone wrong</li>
+  }
+</section>

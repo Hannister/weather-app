@@ -1,0 +1,15 @@
+.day-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+.temp{
+  font-size: 20px;
+  margin: 0 0 6px;
+}
+  p{
+    margin: 0;
+  }
+  .weather-icon{
+    width: 60px;
+  }
+}

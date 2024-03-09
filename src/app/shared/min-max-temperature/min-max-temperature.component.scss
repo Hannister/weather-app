@@ -1,0 +1,8 @@
+.degree{
+  &::after {
+    content: "\00b0";
+    font-weight: 100;
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+}
+
+}

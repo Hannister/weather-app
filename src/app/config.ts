@@ -19,8 +19,5 @@ export const apiConfig = {
     },
   },
   amountForecastDays: 8,
-  updateInterval: {
-    forecast: 300000, // 5 minutes
-    weather: 300000, // 5 minutes
-  },
+  updateInterval: 300000,
 };

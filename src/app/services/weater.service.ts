@@ -1,17 +1,7 @@
 import { apiConfig, appConfig } from './../config';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  catchError,
-  concatMap,
-  forkJoin,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { catchError } from 'rxjs';
 import { AppService } from './app.service';
 import { ICurrentCityWeather } from '../interfaces/ICurrentCity';
 import { IWeatherForecast } from '../interfaces/IWeatherForecast';
@@ -20,8 +10,6 @@ import { IWeatherForecast } from '../interfaces/IWeatherForecast';
   providedIn: 'root',
 })
 export class WetherService {
-  private user = new BehaviorSubject(null);
-
   constructor(private http: HttpClient, private appService: AppService) {}
 
   getCurrentCityWeather() {
@@ -38,14 +26,14 @@ export class WetherService {
         })
       );
   }
-  getForecastWeather() {
+  getSevenDaysForecastWeather() {
     return this.http
       .get<IWeatherForecast>(
         `${
           apiConfig.host
         }forecast/daily?q=${this.appService.getCurrentCity()}&appid=${
           apiConfig.appId
-        }&units=metric&cnt=7`
+        }&units=metric&cnt=${apiConfig.amountForecastDays}`
       )
       .pipe(
         catchError((err) => {

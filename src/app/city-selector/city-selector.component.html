@@ -1,20 +1,22 @@
-<mat-form-field class="example-full-width">
-  <input
-    type="text"
-    matInput
-    [formControl]="cityName"
-    placeholder="Your city name"
-  />
-  <mat-icon matSuffix>search</mat-icon>
-  @if (cityName.hasError('required')) {
-  <mat-error>City is <strong>required</strong></mat-error>
-  }
-</mat-form-field>
-<button
-  (click)="changeCity()"
-  [disabled]="cityName.invalid"
-  mat-raised-button
-  color="primary"
->
-  Search
-</button>
+<section class="city-pick">
+  <mat-form-field class="full-width">
+    <input
+      type="text"
+      matInput
+      [formControl]="cityName"
+      placeholder="Your city name"
+    />
+    <mat-icon matSuffix>search</mat-icon>
+    @if (cityName.hasError('required')) {
+    <mat-error>City is <strong>required</strong></mat-error>
+    }
+  </mat-form-field>
+  <button
+    (click)="changeCity()"
+    [disabled]="cityName.invalid"
+    mat-raised-button
+    color="primary"
+  >
+    Search
+  </button>
+</section>
