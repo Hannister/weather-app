@@ -1,27 +1,30 @@
-@if(weather$ | async; as weather) {
 <main
   class="main-container"
   [ngStyle]="{
     'background-image':
-      'url(./../../assets/backgrounds/' +
-      weather.currentCityWeather.weather[0].icon +
-      '.webp)'
+      'url(./../../assets/backgrounds/' + backgroundImg + '.webp)'
   }"
 >
   <section class="main-section">
     <city-selector (newCityName)="changeCity($event)"></city-selector>
+    @if (weather$ | async; as weather) {
 
-    <current-city-temperature
-      [weather]="weather.currentCityWeather"
-    ></current-city-temperature>
-    <mat-divider class="divider"></mat-divider>
+    <div class="details-temp">
+      <current-city-temperature
+        [weather]="weather.currentCityWeather"
+      ></current-city-temperature>
+      <mat-divider class="divider"></mat-divider>
 
-    <seven-day-forecast
-      [weatherForecast]="weather.forecastWeather"
-    ></seven-day-forecast>
+      <seven-day-forecast
+        [weatherForecast]="weather.forecastWeather"
+      ></seven-day-forecast>
+    </div>
+    }@else {
+    <div class="error-name">
+      <p>
+        Sorry but city <strong>'{{ city }}'</strong> no found.
+      </p>
+    </div>
+    }
   </section>
 </main>
-
-}@else {
-<p>Sorry but city '{{ city }}' no found.</p>
-}

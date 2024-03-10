@@ -8,17 +8,15 @@ import {
   forkJoin,
   interval,
   map,
-  mergeMap,
-  repeat,
   startWith,
   switchMap,
-  timeInterval,
+  tap,
 } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { AppService } from './services/app.service';
 import { IWeather } from './interfaces/IWeather';
 import { MatDividerModule } from '@angular/material/divider';
-import { apiConfig } from './config';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-root',
@@ -32,14 +30,14 @@ import { apiConfig } from './config';
     MatDividerModule,
     AsyncPipe,
     CommonModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class AppComponent implements OnInit {
   weather$!: Observable<IWeather>;
   city!: string;
   title = 'weather-app';
-  backgroundImg!: string;
-
+  backgroundImg = 'unknown';
   constructor(
     private wetherService: WetherService,
     private appService: AppService
@@ -47,6 +45,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWeather();
+
+    // 'background-image':
+    // 'url(./../../assets/backgrounds/' +
+    // weather.currentCityWeather.weather[0].icon +
+    // '.webp)'
   }
 
   changeCity(city: string) {
@@ -63,6 +66,9 @@ export class AppComponent implements OnInit {
           this.wetherService.getCurrentCityWeather(),
           this.wetherService.getSevenDaysForecastWeather(),
         ]).pipe(
+          tap((data) => {
+            this.backgroundImg = data[0].weather[0].icon;
+          }),
           map(([currentCityWeather, forecastWeather]) => ({
             currentCityWeather,
             forecastWeather,
