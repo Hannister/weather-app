@@ -1,0 +1,40 @@
+<div class="temp-container">
+  <!-- {{ weather | json }} -->
+  <section class="city-details-container">
+    <div class="city-details">
+      <h1 class="city-name">{{ weather.name }}</h1>
+      <h3 class="current-date">
+        {{ weather.dt * 1000 | date : "mediumDate" }}
+      </h3>
+      <img class="weather-icon" [src]="icon" />
+      <h2 class="weather-description">{{ weather.weather[0].description }}</h2>
+    </div>
+    <div class="weather-details">
+      <p>
+        <strong>Wind speed: </strong> {{ weather.wind.speed }}
+        {{ windSpeedUnit }}
+      </p>
+      <p><strong>Humidity: </strong> {{ weather.main.humidity }}</p>
+      <p>
+        <strong>Sunrise: </strong>
+        {{ weather.sys.sunrise * 1000 | date : "shortTime" }}
+      </p>
+      <p>
+        <strong>Sunset: </strong>
+        {{ weather.sys.sunset * 1000 | date : "shortTime" }}
+      </p>
+    </div>
+  </section>
+
+  <section class="city-temp">
+    <h1 class="current-temp">
+      <span class="degree">{{ weather.main.temp | number : "1.0-0" }}</span>
+    </h1>
+    <h4 class="min-max-temp">
+      <min-max-temperature
+        [maxTemp]="weather.main.temp_max"
+        [minTemp]="weather.main.temp_min"
+      ></min-max-temperature>
+    </h4>
+  </section>
+</div>

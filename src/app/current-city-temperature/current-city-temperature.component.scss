@@ -1,0 +1,71 @@
+.temp-container{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+
+  .city-details-container{
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    .city-details{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .city-name{
+        font-size: 60px;
+        line-height: 1;
+      }
+      .current-date{
+        font-size: 20px;
+      }
+      .weather-icon{
+        width: 110px;
+        margin: 14px 0;
+      }
+      .weather-description{
+        font-size: 30px;
+      }
+    }
+    .weather-details{
+      align-self: end;
+      margin-left: 40px;
+    }
+  }
+
+  .city-temp{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    text-align: center;
+    justify-content: space-between;
+    .current-temp{
+      font-size: 233px;
+      line-height: 1;
+      font-weight: 100;
+  }
+
+    .min-max-temp{
+      font-size: 40px;
+      font-weight: 300;
+
+    }
+  }
+  .degree{
+    &::after {
+      content: "\00b0";
+      font-weight: 100;
+      position: relative;
+      font-size: 90px;
+      top: -94px;
+      font-family: Montserrat, "Helvetica Neue", sans-serif;
+  }
+  }
+}
