@@ -1,6 +1,8 @@
-export const appConfig = {
-  defaultUnit: 'metric',
-  defaultCity: 'Tel Aviv',
+import { WeatherConfig } from './interfaces and enums/weather-config';
+
+export const appConfig: WeatherConfig = {
+  unit: 'metric',
+  city: 'Tel Aviv',
 };
 
 export const apiConfig = {

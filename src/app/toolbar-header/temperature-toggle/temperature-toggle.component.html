@@ -1,0 +1,12 @@
+<section class="toggle-container">
+  <p class="temperature">{{ isCelsius ? "Celsius" : "Fahrenheit" }}</p>
+  <div class="toggle-switch">
+    <input
+      type="checkbox"
+      id="temperatureToggle"
+      [checked]="isCelsius"
+      (change)="toggleTemperatureUnit()"
+    />
+    <label for="temperatureToggle"></label>
+  </div>
+</section>

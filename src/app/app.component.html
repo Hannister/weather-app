@@ -5,6 +5,7 @@
       'url(./../../assets/backgrounds/' + backgroundImg + '.webp)'
   }"
 >
+  <toolbar-header></toolbar-header>
   <section class="main-section">
     <city-selector (newCityName)="changeCity($event)"></city-selector>
     @if (weather$ | async; as weather) {

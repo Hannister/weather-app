@@ -3,7 +3,7 @@ import { JsonPipe } from '@angular/common';
 import {
   IWeatherForecast,
   IWeatherForecastList,
-} from '../interfaces/IWeatherForecast';
+} from '../interfaces and enums/IWeatherForecast';
 import { DayCardForecastComponent } from './day-card-forecast/day-card-forecast.component';
 
 @Component({

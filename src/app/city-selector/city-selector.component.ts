@@ -31,6 +31,7 @@ export class CitySelectorComponent {
   changeCity() {
     if (this.cityName.value) {
       this.newCityName.emit(this.cityName.value);
+      this.cityName.reset();
     }
   }
 }

@@ -1,10 +1,11 @@
-import { apiConfig, appConfig } from './../config';
+import { apiConfig } from './../config';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs';
 import { AppService } from './app.service';
-import { ICurrentCityWeather } from '../interfaces/ICurrentCity';
-import { IWeatherForecast } from '../interfaces/IWeatherForecast';
+import { ICurrentCityWeather } from '../interfaces and enums/ICurrentCity';
+import { IWeatherForecast } from '../interfaces and enums/IWeatherForecast';
+import { WeatherConfig } from '../interfaces and enums/weather-config';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +13,10 @@ import { IWeatherForecast } from '../interfaces/IWeatherForecast';
 export class WetherService {
   constructor(private http: HttpClient, private appService: AppService) {}
 
-  getCurrentCityWeather() {
+  getCurrentCityWeather(data: WeatherConfig) {
     return this.http
       .get<ICurrentCityWeather>(
-        `${apiConfig.host}weather?q=${this.appService.getCurrentCity()}&units=${
-          appConfig.defaultUnit
-        }&appid=${apiConfig.appId}`
+        `${apiConfig.host}weather?q=${data.city}&units=${data.unit}&appid=${apiConfig.appId}`
       )
       .pipe(
         catchError((err) => {
@@ -26,14 +25,10 @@ export class WetherService {
         })
       );
   }
-  getSevenDaysForecastWeather() {
+  getSevenDaysForecastWeather(data: WeatherConfig) {
     return this.http
       .get<IWeatherForecast>(
-        `${
-          apiConfig.host
-        }forecast/daily?q=${this.appService.getCurrentCity()}&appid=${
-          apiConfig.appId
-        }&units=metric&cnt=${apiConfig.amountForecastDays}`
+        `${apiConfig.host}forecast/daily?q=${data.city}&appid=${apiConfig.appId}&units=${data.unit}&cnt=${apiConfig.amountForecastDays}`
       )
       .pipe(
         catchError((err) => {

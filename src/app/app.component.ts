@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CitySelectorComponent } from './city-selector/city-selector.component';
 import { CurrentCityTemperatureComponent } from './current-city-temperature/current-city-temperature.component';
 import { SevenDayForecastComponent } from './seven-day-forecast/seven-day-forecast.component';
 import { WetherService } from './services/weater.service';
 import {
   Observable,
+  Subscription,
   forkJoin,
   interval,
   map,
@@ -14,9 +15,11 @@ import {
 } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { AppService } from './services/app.service';
-import { IWeather } from './interfaces/IWeather';
+import { IWeather } from './interfaces and enums/IWeather';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ToolbarHeaderComponent } from './toolbar-header/toolbar-header.component';
+import { WeatherConfig } from './interfaces and enums/weather-config';
 
 @Component({
   selector: 'app-root',
@@ -31,40 +34,41 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     AsyncPipe,
     CommonModule,
     MatProgressSpinnerModule,
+    ToolbarHeaderComponent,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   weather$!: Observable<IWeather>;
   city!: string;
   title = 'weather-app';
   backgroundImg = 'unknown';
+  private weatherDetailsSubscription!: Subscription;
+
   constructor(
     private wetherService: WetherService,
     private appService: AppService
   ) {}
 
   ngOnInit(): void {
-    this.getWeather();
-
-    // 'background-image':
-    // 'url(./../../assets/backgrounds/' +
-    // weather.currentCityWeather.weather[0].icon +
-    // '.webp)'
+    this.weatherDetailsSubscription = this.appService.weatherDetails.subscribe({
+      next: (data) => {
+        this.getWeather(data);
+      },
+    });
   }
 
   changeCity(city: string) {
     this.city = city;
-    this.appService.setCurrentCity(city);
-    this.getWeather();
+    this.appService.changeCurrentCity(city);
   }
 
-  getWeather() {
-    this.weather$ = interval(3 * 60 * 1000).pipe(
+  getWeather(data: WeatherConfig) {
+    this.weather$ = interval(10 * 60 * 1000).pipe(
       startWith(0),
       switchMap(() =>
         forkJoin([
-          this.wetherService.getCurrentCityWeather(),
-          this.wetherService.getSevenDaysForecastWeather(),
+          this.wetherService.getCurrentCityWeather(data),
+          this.wetherService.getSevenDaysForecastWeather(data),
         ]).pipe(
           tap((data) => {
             this.backgroundImg = data[0].weather[0].icon;
@@ -76,5 +80,9 @@ export class AppComponent implements OnInit {
         )
       )
     );
+  }
+
+  ngOnDestroy(): void {
+    this.weatherDetailsSubscription?.unsubscribe();
   }
 }

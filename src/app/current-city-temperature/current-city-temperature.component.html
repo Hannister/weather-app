@@ -10,7 +10,10 @@
       <h2 class="weather-description">{{ weather.weather[0].description }}</h2>
     </div>
     <div class="weather-details">
-      <p><strong>Wind speed: </strong> {{ weather.wind.speed }}</p>
+      <p>
+        <strong>Wind speed: </strong> {{ weather.wind.speed }}
+        {{ windSpeedUnit }}
+      </p>
       <p><strong>Humidity: </strong> {{ weather.main.humidity }}</p>
       <p>
         <strong>Sunrise: </strong>

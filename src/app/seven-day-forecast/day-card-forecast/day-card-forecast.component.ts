@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IWeatherForecastList } from '../../interfaces/IWeatherForecast';
+import { IWeatherForecastList } from '../../interfaces and enums/IWeatherForecast';
 import { CommonModule } from '@angular/common';
 import { MinMaxTemperatureComponent } from '../../shared/min-max-temperature/min-max-temperature.component';
 
